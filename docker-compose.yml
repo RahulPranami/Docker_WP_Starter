@@ -33,9 +33,16 @@ services:
     environment:
       WORDPRESS_DB_HOST: db:3306
       WORDPRESS_DB_USER: MyWordPressUser
-      WORDPRESS_DB_PASSWORD: Pa$$5w0rD
+      WORDPRESS_DB_PASSWORD_FILE: /run/secrets/wordpress_password
+      # WORDPRESS_DB_PASSWORD: Pa$$5w0rD
       WORDPRESS_DB_NAME: MyWordPressDatabaseName
     # Similar to MySQL image variables, the last four lines define the main variables needed for the WordPress container to work properly with the MySQL container.
+    secrets:
+      - wordpress_password
     volumes: ["./:/var/www/html"]
+secrets:
+  wordpress_password:
+    file: ./wordpress_password.txt
+
 volumes:
   mysql: {}
